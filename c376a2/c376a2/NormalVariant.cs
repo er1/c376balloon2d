@@ -110,7 +110,10 @@ namespace c376a2
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 Epc.velocity += new Vector2(2, 0);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            if (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Length() > 0.25f)
+                Epc.velocity += GamePad.GetState(PlayerIndex.One).ThumbSticks.Left * 2;
+
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed) || Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 if ((currentTime - lastFired) > 200 && Epc.CanFire)
                 {

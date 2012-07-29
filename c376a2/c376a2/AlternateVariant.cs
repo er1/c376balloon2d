@@ -35,7 +35,7 @@ namespace c376a2
                 entities.add(e);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            if (Keyboard.GetState().IsKeyDown(Keys.Z) || (GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed))
             {
                 if (!specialFired && Epc.CanFire)
                 {

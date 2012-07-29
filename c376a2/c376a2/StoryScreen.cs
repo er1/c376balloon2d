@@ -16,6 +16,7 @@ namespace c376a2
     {
         public static Texture2D story;
         bool lastEnterState = true;
+        bool lastStartState = true;
         int timer = 0;
 
         public StoryScreen()
@@ -29,8 +30,14 @@ namespace c376a2
             {
                 timer = 1000000;
             }
+            
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed && !lastStartState)
+            {
+                timer = 1000000;
+            }
 
             lastEnterState = Keyboard.GetState().IsKeyDown(Keys.Enter);
+            lastStartState = GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed;
         }
         public void draw(SpriteBatch sb)
         {

@@ -34,7 +34,7 @@ namespace c376a2
 
             double currentTime = gt.TotalGameTime.TotalMilliseconds;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Z))
+            if (Keyboard.GetState().IsKeyDown(Keys.Z) || (GamePad.GetState(PlayerIndex.One).Buttons.B == ButtonState.Pressed))
             {
                 if ((currentTime - lastFired) > 200)
                 {
@@ -107,7 +107,7 @@ namespace c376a2
             }
             */
 
-            if (Keyboard.GetState().IsKeyDown(Keys.G))
+            if (Keyboard.GetState().IsKeyDown(Keys.G) || (GamePad.GetState(PlayerIndex.One).Buttons.Y == ButtonState.Pressed))
             {
                 if ((currentTime - lastFired) > 200)
                 {

@@ -18,6 +18,9 @@ namespace c376a2
         bool lastEscState = true;
         bool lastUpState = true;
         bool lastDownState = true;
+
+        bool lastBackState = true;
+        float lastYState = 0;
         int menuIndex = 0;
 
         public MenuScreen()
@@ -26,6 +29,22 @@ namespace c376a2
         }
         public void think(GameTime gt)
         {
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) && !lastBackState) {
+                Switcher.game.Exit();
+            }
+
+            float currentYstate = (GamePad.GetState(PlayerIndex.One).ThumbSticks.Left.Y);
+
+            if (currentYstate < -0.5f && lastYState >= -0.5f)
+            {
+                menuIndex = Math.Max(menuIndex - 1, 0);
+            }
+
+            if (currentYstate > 0.5f && lastYState <= 0.5f)
+            {
+                menuIndex = Math.Min(menuIndex + 1, 2);
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) && !lastEscState)
             {
                 Switcher.game.Exit();
@@ -44,6 +63,8 @@ namespace c376a2
             lastEscState = Keyboard.GetState().IsKeyDown(Keys.Escape);
             lastUpState = Keyboard.GetState().IsKeyDown(Keys.Up);
             lastDownState = Keyboard.GetState().IsKeyDown(Keys.Down);
+            lastBackState = (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed);
+            lastYState = currentYstate;
         }
         public void draw(SpriteBatch sb)
         {
@@ -74,7 +95,7 @@ namespace c376a2
         }
         public ThinkDraw next()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed))
             {
                 ThinkDraw g;
                 switch (menuIndex)
